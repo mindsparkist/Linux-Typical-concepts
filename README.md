@@ -24,6 +24,7 @@ Here's a breakdown of the concept:
 
 * Run levels offer control over resource usage and system behavior.
 * They enable administrators to tailor the system to specific needs, like running a server without a GUI for efficiency.
+* https://www.youtube.com/watch?v=LPu3IZwbOA8 -- check for runlevel
 
 **Modern Usage:**
 
