@@ -1,5 +1,5 @@
 # Linux-Typical-concepts
-
+https://shuvradipchakrabortyportfolio.blogspot.com/2022/10/linux-notes.html
 
 # Linux Concept
 
