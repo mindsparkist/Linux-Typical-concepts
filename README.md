@@ -172,6 +172,9 @@ This will display information about the target, including its dependencies and t
 
 By understanding these concepts and methods, you can gain more control over your Linux boot process and explore different system states for troubleshooting or specific needs.
 
+
+## Linux Deamon 
+
 In Linux, a daemon (pronounced like "day-mon") is a special type of program that runs in the background, autonomously performing tasks without requiring direct user interaction.  They are the silent workhorses of the system, ensuring essential services function smoothly.
 
 Here's a closer look at what daemons do:
