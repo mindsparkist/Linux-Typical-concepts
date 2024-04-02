@@ -397,3 +397,57 @@ ps aux | sort -nrk 3
 * **htop:** A more user-friendly alternative to `top` with an interactive interface.
 
 By understanding `ps aux`, you gain valuable insight into your system's processes, enabling you to optimize performance and manage resources effectively.
+
+
+Both `kill` and `pkill` commands are used to terminate processes in Linux, but they differ in how they target the processes they terminate:
+
+**kill:**
+
+* **Terminates by PID:**  `kill` targets processes by their **Process ID (PID)**.  You need to know the exact PID of the process you want to terminate.
+* **Generic Signal:** By default, `kill` sends a **SIGTERM (terminate)** signal to the process. This signal instructs the process to shut down gracefully, allowing it to clean up any resources it's holding before exiting.
+* **Can Terminate Any Process:** You can use `kill` with various signal options to send different signals to the process, including forceful termination with `SIGKILL`.
+
+
+**pkill:**
+
+* **Terminates by Name:**  `pkill` targets processes by their **name (or partial name)**. This is more convenient than remembering PIDs, especially if you have multiple instances of a process running.
+* **Wildcard Matching:** `pkill` supports wildcard characters like `*` for broader matching. For example, `pkill firefox` would terminate all processes whose names start with "firefox."
+* **Limited Signal Options:** By default, `pkill` also sends a SIGTERM signal to the processes it finds. It typically doesn't offer the same level of control over signal options as `kill`.
+
+
+Here's a table summarizing the key differences:
+
+| Feature        | kill          | pkill           |
+|----------------|----------------|-----------------|
+| Target Method   | Process ID (PID) | Process Name      |
+| Wildcards      | Not Supported   | Supported        |
+| Default Signal | SIGTERM         | SIGTERM         |
+| Signal Options | More Flexible   | Limited          |
+
+
+**Choosing the Right Tool:**
+
+* Use `kill` when you know the exact PID of the process you want to terminate and potentially need to send a specific signal.
+* Use `pkill` when you want to terminate processes based on their name (or partial name) and a SIGTERM is sufficient.
+
+**Examples:**
+
+* Terminate a process with PID 1234:
+
+```bash
+kill 1234
+```
+
+* Terminate all Firefox processes:
+
+```bash
+pkill firefox
+```
+
+* Terminate all processes starting with "chrome":
+
+```bash
+pkill -f chrome*
+```
+
+By understanding these distinctions, you can effectively target and terminate processes in your Linux system using either `kill` or `pkill` depending on your specific needs.
