@@ -340,3 +340,60 @@ Here are some resources to learn more about the `dd` command:
 * [https://www.prepbytes.com/blog/linux/dd-command-linux/](https://www.prepbytes.com/blog/linux/dd-command-linux/)
 
 By understanding the capabilities and potential risks of `dd`, you can leverage it for various data manipulation tasks while ensuring safe and controlled operations on your Linux system.
+
+
+The `ps aux` command in Linux is a versatile tool that provides detailed information about all processes currently running on your system. Here's a breakdown of what it does:
+
+**Functionality:**
+
+* **Process Listing:** `ps` stands for "process status." The `aux` combination provides a comprehensive listing of all processes, including those:
+    * Started by any user (a for all)
+    * With detailed information about the user who owns the process (u)
+    * Even if they weren't started from a terminal (x)
+
+**Understanding the Output:**
+
+The output of `ps aux` displays various columns of information about each process. Some common columns include:
+
+* **PID (Process ID):** A unique identifier for each running process.
+* **USER:** The username of the process owner.
+* **%CPU:** The percentage of CPU resources the process is currently using.
+* **%MEM:** The percentage of memory the process is using.
+* **VSZ (Virtual Size):** The total amount of virtual memory allocated to the process.
+* **RSS (Resident Set Size):** The amount of physical memory currently used by the process.
+* **START:** The time the process was started.
+* **TIME:** The total CPU time the process has used.
+* **COMMAND:** The actual command that launched the process.
+
+**Why it's Useful:**
+
+* **System Monitoring:**  You can use `ps aux` to monitor system activity, identify resource-intensive processes, and troubleshoot performance issues.
+* **Process Management:**  It helps you understand what processes are running, who owns them, and how much system resources they're consuming.
+* **Finding Specific Processes:**  You can filter the output of `ps aux` using `grep` or other commands to find specific processes based on their name, PID, user, or other criteria.
+
+**Examples of Usage:**
+
+* **List all processes:**
+
+```bash
+ps aux
+```
+
+* **List processes owned by a specific user (replace 'username' with the actual username):**
+
+```bash
+ps aux | grep username
+```
+
+* **Sort processes by CPU usage (highest first):**
+
+```bash
+ps aux | sort -nrk 3
+```
+
+**Alternatives:**
+
+* **top:** Provides a real-time overview of system resources, including CPU, memory, and running processes.
+* **htop:** A more user-friendly alternative to `top` with an interactive interface.
+
+By understanding `ps aux`, you gain valuable insight into your system's processes, enabling you to optimize performance and manage resources effectively.
