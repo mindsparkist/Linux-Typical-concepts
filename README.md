@@ -446,6 +446,106 @@ pkill firefox
 
 * Terminate all processes starting with "chrome":
 
+
+
+The `dd` command in Linux is a powerful tool used for copying and converting raw data. It's known for its versatility but also requires caution due to its ability to overwrite data without confirmation. Here's a breakdown of its key aspects:
+
+**What it Does:**
+
+* **Raw Data Transfer:** `dd` copies raw data from one location (the input) to another (the output)  This can involve copying entire disks, partitions, or individual files, treating them as a stream of bytes.
+* **Conversion Capabilities:** `dd` can perform basic conversions on the data as it's copied.  For example, it can swap the byte order between big-endian and little-endian architectures.
+
+**Common Use Cases:**
+
+* **Backing Up Data:**  `dd` can be used to create backups of entire disks or partitions, providing a raw copy of the data.
+* **Creating Bootable USB Drives:** You can use `dd` to write the image of an operating system installer ISO file to a USB drive, making it bootable.
+* **Wiping Disks:** `dd` can be used to securely erase a disk by writing zeroes or random data to it. (Use with extreme caution!)
+* **Disk Imaging:** You can create a forensic image of a disk for data recovery or analysis purposes.
+
+**Basic Syntax:**
+
+```
+dd if=input_file of=output_file [options]
+```
+
+* `if`: Specifies the input file or device (e.g., a disk partition)
+* `of`: Specifies the output file or device (e.g., another disk partition or a file)
+* `options`: Various optional flags can be used to control block size, conversion options, and error handling.
+
+**Important Considerations:**
+
+* **Destructive Potential:** `dd` can be destructive if used incorrectly.  A typo in the source or destination can lead to data loss.  Always double-check your commands before running them.
+* **Understanding Options:**  There are many `dd` options available.  Make sure you understand what each option does before using it. A common mistake is using `dd` to copy files between partitions, which is typically better handled with the `cp` command.
+* **Alternatives for Everyday Use:** For copying regular files, the `cp` command is generally a safer and more user-friendly option.
+
+**Learning More:**
+
+Here are some resources to learn more about the `dd` command:
+
+* `man dd`: This displays the manual page for `dd` in your terminal, providing detailed information about its usage and options.
+* [https://www.geeksforgeeks.org/courses](https://www.geeksforgeeks.org/courses)
+* [https://www.prepbytes.com/blog/linux/dd-command-linux/](https://www.prepbytes.com/blog/linux/dd-command-linux/)
+
+By understanding the capabilities and potential risks of `dd`, you can leverage it for various data manipulation tasks while ensuring safe and controlled operations on your Linux system.
+
+
+The `ps aux` command in Linux is a versatile tool that provides detailed information about all processes currently running on your system. Here's a breakdown of what it does:
+
+**Functionality:**
+
+* **Process Listing:** `ps` stands for "process status." The `aux` combination provides a comprehensive listing of all processes, including those:
+    * Started by any user (a for all)
+    * With detailed information about the user who owns the process (u)
+    * Even if they weren't started from a terminal (x)
+
+**Understanding the Output:**
+
+The output of `ps aux` displays various columns of information about each process. Some common columns include:
+
+* **PID (Process ID):** A unique identifier for each running process.
+* **USER:** The username of the process owner.
+* **%CPU:** The percentage of CPU resources the process is currently using.
+* **%MEM:** The percentage of memory the process is using.
+* **VSZ (Virtual Size):** The total amount of virtual memory allocated to the process.
+* **RSS (Resident Set Size):** The amount of physical memory currently used by the process.
+* **START:** The time the process was started.
+* **TIME:** The total CPU time the process has used.
+* **COMMAND:** The actual command that launched the process.
+
+**Why it's Useful:**
+
+* **System Monitoring:**  You can use `ps aux` to monitor system activity, identify resource-intensive processes, and troubleshoot performance issues.
+* **Process Management:**  It helps you understand what processes are running, who owns them, and how much system resources they're consuming.
+* **Finding Specific Processes:**  You can filter the output of `ps aux` using `grep` or other commands to find specific processes based on their name, PID, user, or other criteria.
+
+**Examples of Usage:**
+
+* **List all processes:**
+
+```bash
+ps aux
+```
+
+* **List processes owned by a specific user (replace 'username' with the actual username):**
+
+```bash
+ps aux | grep username
+```
+
+* **Sort processes by CPU usage (highest first):**
+
+```bash
+ps aux | sort -nrk 3
+```
+
+**Alternatives:**
+
+* **top:** Provides a real-time overview of system resources, including CPU, memory, and running processes.
+* **htop:** A more user-friendly alternative to `top` with an interactive interface.
+
+By understanding `ps aux`, you gain valuable insight into your system's processes, enabling you to optimize performance and manage resources effectively.
+
+
 ```bash
 pkill -f chrome*
 ```
