@@ -3,6 +3,25 @@ https://shuvradipchakrabortyportfolio.blogspot.com/2022/10/linux-notes.html
 
 # Linux Concept
 
+## Switching users in a multiuser enviorment 
+
+In a multiuser enviourment shell could me divided into 2 major parts 
+1 login shell 
+2 intactive shell
+
+login shell 
+- A login shell is a shell session initiated after a user logs into the system, either locally or remotely.
+- Login shells typically execute scripts like .bash_profile, .bash_login, or .profile depending on the shell (e.g., Bash, Zsh) to set up the user environment.
+- which load up lib, paths
+- to login in this mode use command >su -
+
+interactive shell 
+- An interactive shell is a shell session where the user can interactively issue commands and receive responses.
+- It's not necessarily tied to a login; you can open an interactive shell within a terminal emulator without having to log in again.
+- it usually loads .bashrc file
+- to login in this mode use command >su 
+
+
 Run levels in Linux are different operating states defined by numbers, typically ranging from 0 to 6. Each run level specifies which system services and processes are running, essentially controlling what your system can do in that state. 
 
 Here's a breakdown of the concept:
