@@ -85,8 +85,11 @@ pkill firefox
 
 * Terminate all processes starting with "chrome":
 
+```bash
+pkill -f chrome*
+```
 
-By understanding `ps aux`, you gain valuable insight into your system's processes, enabling you to optimize performance and manage resources effectively.
+By understanding these distinctions, you can effectively target and terminate processes in your Linux system using either `kill` or `pkill` depending on your specific needs.
 
 There are many signals used in Linux (including RHEL) to communicate with processes, but a few  are particularly noteworthy when it comes to terminating or otherwise controlling processes. Here are some of the main kill signals used in Linux (RHEL):
 
@@ -100,11 +103,4 @@ There are many signals used in Linux (including RHEL) to communicate with proces
 
 
 These are just a few of the important kill signals used in Linux. You can find a comprehensive list of signals and their descriptions using the `man 7 signal` command.
-
-
-```bash
-pkill -f chrome*
-```
-
-By understanding these distinctions, you can effectively target and terminate processes in your Linux system using either `kill` or `pkill` depending on your specific needs.
 
