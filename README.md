@@ -99,6 +99,31 @@ There are many signals used in Linux (including RHEL) to communicate with proces
 
 * **SIGKILL (9)**: This signal is used for forceful termination of a process.  A process that receives SIGKILL cannot ignore it and will be immediately terminated without any chance to clean up resources.  This should be used as a last resort as it can lead to data loss or system instability.
 
+The `w` command in Linux is used to display information about the users who are currently logged in and their activities. When you run the `w` command, it typically outputs a list of users currently logged in, along with details such as their username, terminal, login time, idle time, and what command they are currently running, if any.
+
+Here's a typical example of the output of the `w` command:
+
+```
+ 17:23:45 up 10 days,  3:27,  5 users,  load average: 0.52, 0.25, 0.18
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+user1    tty1                      Mon10    4days  0.00s  0.00s -bash
+user2    tty2                      Mon12    1:24m  0.18s  0.18s top
+user3    pts/0    :0.0             13:45    3:20   0.00s  0.00s bash
+```
+
+Here's a breakdown of the columns:
+
+- **USER**: The username of the logged-in user.
+- **TTY**: The terminal name or "pts" (pseudo terminal slave) for remote connections.
+- **FROM**: The hostname or IP address from which the user is logged in.
+- **LOGIN@**: The time the user logged in.
+- **IDLE**: How long the user has been idle.
+- **JCPU**: The total CPU time used by the user's job(s).
+- **PCPU**: The CPU time used by the user's current process.
+- **WHAT**: The command being executed by the user.
+
+The `w` command is useful for administrators to monitor user activity on a system, see who is currently logged in, and what they are doing.
+
 * **SIGHUP (1)**: This signal is sent to a process when its controlling terminal is disconnected. It's  commonly used to trigger a process to reread its configuration file.
 
 
