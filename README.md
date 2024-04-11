@@ -240,3 +240,39 @@ By effectively using `nice` and `renice`, you can optimize process scheduling an
 
 Link = https://www.youtube.com/watch?v=kmk3_kEiJvk&pp=ygUUbmljZSByZW5pY2UgaW4gbGludXg%3D
 
+The `uptime` command in Linux displays the current time, how long the system has been running, the number of users currently logged in, and the system load averages for the past 1, 5, and 15 minutes.
+
+When you run the `uptime` command, you'll typically see output like this:
+
+```
+ 17:23:45 up 10 days,  3:27,  5 users,  load average: 0.52, 0.25, 0.18
+```
+
+Here's a breakdown of the information provided:
+
+- **17:23:45**: Current time.
+- **up 10 days, 3:27**: Time since the system was last booted. In this example, it's been up for 10 days and 3 hours and 27 minutes.
+- **5 users**: The number of users currently logged in to the system.
+- **load average**: The load average represents the average number of processes waiting to run over the last 1, 5, and 15 minutes, respectively. In the example, the load averages are 0.52, 0.25, and 0.18.
+
+The load averages give you an idea of how busy the system has been over the specified time periods. High load averages could indicate that the system is under heavy load, while low load averages suggest the system is relatively idle.
+
+The `uptime` command is handy for quickly checking how long a Linux system has been running and its current load status.
+
+## You can check CPU info using 
+
+```
+cat /proc/cpuinfo
+```
+## You can check number of CPU processors. It will give you a number
+
+```
+ cat /proc/cpuinfo | grep "model name" | wc -l
+```
+to check average load in the cpu 
+
+Divide Load from uptime by number of CPU processors.
+
+Attaching Img
+
+
