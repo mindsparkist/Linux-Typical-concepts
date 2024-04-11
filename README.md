@@ -1,5 +1,8 @@
 # Linux-Typical-concepts
 3 - Interrupt the Boot Process to Gain Access to a System
+https://onedrive.live.com/view?id=758D23B2E6014B79!479&resid=758D23B2E6014B79!479&authkey=!APLrE40SPxIsN8c&wdAccPdf=0&wdEmbedFS=1&wdo=2&cid=758d23b2e6014b79
+
+4 - Identify CPUMemory Intensive Processes, Adjust Process Priority and Kill Processes - Part 1
 
 # Linux Concept
 
