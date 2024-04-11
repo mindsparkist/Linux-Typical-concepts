@@ -208,6 +208,8 @@ sleep 10 &
 
 In Linux, the `nice` and `renice` commands come in handy for managing process priorities, affecting how much CPU time they receive. Here's a breakdown of what they do and how they can be useful:
 
+In Linux, only privileged users can change the `nice` value, Example might be when using top command only privileged users can change/escalate the nice level to higher levels while non privileged users can decrease it. 
+
 **Nice Command**
 
 * **Function:** Launches a new process with a specific priority (niceness value).
