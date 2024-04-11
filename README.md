@@ -270,6 +270,8 @@ cat /proc/cpuinfo
  cat /proc/cpuinfo | grep "model name" | wc -l
 ```
 to check average load in the cpu 
+![Avg Load](https://github.com/mindsparkist/Linux-Typical-concepts/blob/3---Interrupt-the-Boot-Process-to-Gain-Access-to-a-System/Screenshot%202024-04-11%20085208.png?raw=true)
+
 
 Divide Load from uptime by number of CPU processors.
 
