@@ -275,8 +275,32 @@ to check average load in the cpu
 ![Avg Load](https://github.com/mindsparkist/Linux-Typical-concepts/blob/3---Interrupt-the-Boot-Process-to-Gain-Access-to-a-System/Screenshot%202024-04-11%20085208.png?raw=true)
 
 
-Divide Load from uptime by number of CPU processors.
+## Divide Load from uptime by number of CPU processors.
 
 Attaching Img
 
+The `top` command is a powerful tool available in RHEL (Red Hat Enterprise Linux) and other Linux distributions for monitoring system performance in real-time. It provides a dynamic view of various aspects, including:
 
+* **Running Processes:** Lists all processes currently running on the system, along with details like process ID (PID), CPU usage, memory usage, and the command that launched the process.
+* **System Resources:** Displays vital system resource utilization statistics like CPU usage (overall and per core), memory usage (physical and swap), uptime, load average, and tasks.
+
+**Key Features of top:**
+
+* **Real-time Monitoring:** Continuously updates the information, allowing you to observe ongoing system activity.
+* **Interactive Interface:**  Enables you to sort the process list based on different criteria (CPU usage, memory usage, etc.) and perform actions on processes (like termination).
+* **Customization:** Offers various options to customize the view, such as hiding specific columns or changing the refresh rate.
+
+**Using top:**
+
+1. Open a terminal window.
+2. Type `top` and press Enter.
+
+The top command will display information in two sections:
+
+* **Top Section:** Shows system uptime, number of users, load average, CPU usage breakdown, and memory usage statistics.
+* **Bottom Section:** Lists the running processes with details like PID, user, CPU usage, memory usage, virtual memory size, resident memory size, and the command name.
+
+3. Press `h` or `?` for a list of interactive commands you can use within `top`. For example, `k` allows you to kill a process, and `r` changes the nice value of a process (process priority).
+4. Press `q` to exit the `top` command.
+
+By understanding the `top` command's functionalities, you can effectively monitor your RHEL system's performance, identify resource bottlenecks, and manage running processes efficiently.
