@@ -206,3 +206,37 @@ sleep 10 &
 * Be cautious when using `kill` as it can lead to data loss for some processes.
 * Make sure to replace `sleep 10` with the actual command you want to run in the background.
 
+In Linux, the `nice` and `renice` commands come in handy for managing process priorities, affecting how much CPU time they receive. Here's a breakdown of what they do and how they can be useful:
+
+**Nice Command**
+
+* **Function:** Launches a new process with a specific priority (niceness value).
+* **Niceness Value:**  Lower values indicate higher priority (more CPU time), while higher values indicate lower priority (less CPU time). Valid range is typically -20 (highest) to 19 (lowest).  **Note:** Root users can set negative niceness for even higher priority, but this should be used cautiously.
+* **Practical Uses:**
+    * **Background Tasks:**  Run low-priority tasks like system backups or log processing without impacting interactive use by setting a higher niceness value.
+    * **Long-running Processes:** Give priority to critical processes by launching them with a lower niceness value.
+
+**Renice Command**
+
+* **Function:** Modifies the priority of an already running process.
+* **Niceness Value:** Similar to `nice`, use a lower value for higher priority and a higher value for lower priority.
+* **Practical Uses:**
+    * **Adjusting Priorities:** If a background task is taking too long, you can use `renice` to increase its niceness value, giving more CPU time to other processes.
+    * **Fine-tuning Resource Allocation:** System administrators can use `renice` to manage resource usage for specific processes based on their importance.
+
+**Important Considerations:**
+
+* **Normal Users and Priority:**  Regular users can only adjust priorities **down** (higher niceness value).  Raising a process's priority (lower niceness) typically requires root access.
+* **Impact on Performance:**  While `nice` and `renice` can influence process speeds, other factors like system load and available resources also play a role.
+
+
+**Examples:**
+
+* **Run `make` with lower priority:** `nice make` (gives `make` a higher niceness value)
+* **Increase priority of a process with PID 1234:** `renice -n 5 -p 1234` (sets niceness to 5 for process 1234)
+
+
+By effectively using `nice` and `renice`, you can optimize process scheduling and ensure critical tasks receive the resources they need while keeping your Linux system responsive.
+
+Link = https://www.youtube.com/watch?v=kmk3_kEiJvk&pp=ygUUbmljZSByZW5pY2UgaW4gbGludXg%3D
+
