@@ -167,3 +167,62 @@ By following these steps, you can effectively format partitions with file system
 
 **Note:** These instructions are for informational purposes only. Modifying partitions can lead to data loss. It's recommended to  consult your distribution's documentation and use GPT partitioning tools only if comfortable with the process.
 
+## Listing, Creating, and Deleting Partitions on GPT Disks in Linux
+
+GPT disks use a more modern partitioning scheme compared to MBR disks. Here's how to manage partitions on GPT disks using the `gdisk` command:
+
+**Listing Partitions:**
+
+1. Open a terminal window.
+2. Identify the disk you want to work with. Use the `lsblk` command to list all block devices.
+
+   ```bash
+   lsblk
+   ```
+
+   Look for the disk name (e.g., `/dev/sdb`).
+
+3. Use the `gdisk` command followed by the disk name to list existing partitions:
+
+   ```bash
+   sudo gdisk /dev/sdb
+   ```
+
+   You'll see a representation of the disk with details about any existing partitions.
+
+**Creating a Partition:**
+
+1. Open `gdisk` for the desired disk (same as listing).
+2. Type `n` (new) to initiate partition creation.
+3. Choose a partition type (usually `EFI System Partition` or `Linux filesystem`) and a partition number.
+4. Specify the first sector and last sector for the new partition (or leave defaults for using the entire available space).
+5. Type `w` (write) to save the changes to the partition table.
+
+**Deleting a Partition:**
+
+1. Open `gdisk` for the desired disk.
+2. Type `d` (delete) to delete a partition.
+3. Select the partition number you want to delete.
+4. Type `w` (write) to save the changes to the partition table.
+
+**Important Note:** Creating and deleting partitions can lead to data loss if done incorrectly.  Make sure you have backups and understand the process before proceeding.
+
+## Formatting, Mounting, and Unmounting Partitions on GPT Disks
+
+The process of formatting, mounting, and unmounting partitions is identical for both MBR and GPT disks. Refer to the previous explanation  on formatting, mounting, and unmounting for these steps.
+
+**Here's a quick recap:**
+
+* **Formatting:** Use the `mkfs` command with the chosen file system type and partition device (e.g., `sudo mkfs.ext4 /dev/sdb1`).
+* **Mounting:** Use the `mount` command with the partition device and the mount point (e.g., `sudo mount /dev/sdb1 /mnt/mypartition`).
+* **Unmounting (Temporary):** Use the `umount` command with the mount point (e.g., `sudo umount /mnt/mypartition`).
+* **Unmounting (Permanent):**
+    * **Recommended:** Edit `/etc/fstab` to include your partition with mount point, file system, and options (similar to MBR instructions).
+    * **Manual Mounting:** You can continue mounting the partition manually whenever needed.
+
+**Additional Notes for GPT:**
+
+* GPT disks offer greater flexibility for the number and size of partitions compared to MBR.
+* While `fdisk` can be used to view GPT disks in a limited way, it's not recommended for creating or modifying partitions due to potential issues. Always use `gdisk` for GPT disk management.
+
+By following these steps and understanding the distinctions between MBR and GPT, you can effectively manage partitions on your Linux system. Remember to prioritize backups and handle partitions with caution to avoid data loss.
