@@ -37,3 +37,55 @@ Here's a table summarizing some key characteristics:
 
 
 It's always a good idea to consult your distribution's documentation for recommended file systems and consider your specific storage and usage patterns when choosing a file system for your Linux system.
+
+## Listing, Creating, and Deleting Partitions on MBR Disks in Linux
+
+**MBR (Master Boot Record)** disks use a traditional partitioning scheme with limitations on the number and size of partitions. Here's how to manage partitions on MBR disks using the `fdisk` command:
+
+**Listing Partitions:**
+
+1. Open a terminal window.
+2. Identify the disk you want to work with. Use the `lsblk` command to list all block devices.
+
+   ```bash
+   lsblk
+   ```
+
+   Look for the disk name (e.g., `/dev/sda`).
+
+3. Use the `fdisk` command followed by the disk name to list existing partitions:
+
+   ```bash
+   sudo fdisk /dev/sda
+   ```
+
+   You'll see a representation of the disk with details about any existing partitions.
+
+**Creating a Partition:**
+
+1. Open `fdisk` for the desired disk (same as listing).
+2. Type `n` (new) to initiate partition creation.
+3. Choose a partition type (usually `p` for primary) and a partition number.
+4. Specify the first sector and last sector for the new partition (or leave defaults for using the entire available space).
+5. Type `w` (write) to save the changes to the partition table.
+
+**Important Note:** Creating partitions can lead to data loss if done incorrectly.  Make sure you have backups and understand the process before proceeding.
+
+**Deleting a Partition:**
+
+1. Open `fdisk` for the desired disk.
+2. Type `d` (delete) to delete a partition.
+3. Select the partition number you want to delete.
+4. Type `w` (write) to save the changes to the partition table.
+
+**MBR Limitations:**
+
+* MBR disks can only have a maximum of 4 primary partitions.
+* To create more partitions, you can use an extended partition and logical partitions within it, but this adds complexity.
+
+## GPT (GUID Partition Table) Disks
+
+**GPT** disks offer a more modern partitioning scheme with greater flexibility. However, managing GPT disks requires the `gdisk` command. 
+
+**Note:** These instructions are for informational purposes only. Modifying partitions can lead to data loss. It's recommended to  consult your distribution's documentation and use GPT partitioning tools only if comfortable with the process.
+
