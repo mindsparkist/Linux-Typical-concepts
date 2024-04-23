@@ -405,3 +405,101 @@ virsh dominfo <VM_name>
 * **Graphical Alternatives:** While `virsh` provides a powerful command-line interface, some distributions also offer graphical tools for VM management, like virt-manager.
 
 By understanding the capabilities of `virsh`, you can effectively manage your virtual machines on Linux systems using the libvirt library.
+
+
+## Starting, Stopping, Enabling, and Disabling Networking Services in Linux
+
+There are two main approaches to manage networking services in Linux, depending on your system's init system:
+
+**1. Systemd (Most Modern Distributions):**
+
+Systemd is the most common init system used in modern Linux distributions like Ubuntu, Debian (since systemd-sysv init), RHEL (since version 7), and others. Here's how to manage services with systemd:
+
+* **Start:**
+
+```bash
+sudo systemctl start <service_name>
+```
+
+  Replace `<service_name>` with the actual service name (e.g., `sudo systemctl start networking`).
+
+* **Stop:**
+
+```bash
+sudo systemctl stop <service_name>
+```
+
+  Replace `<service_name>` with the actual service name.
+
+* **Enable (Start on Boot):**
+
+```bash
+sudo systemctl enable <service_name>
+```
+
+  This enables the service to start automatically at system boot.
+
+* **Disable (Prevent Automatic Start):**
+
+```bash
+sudo systemctl disable <service_name>
+```
+
+  This prevents the service from starting automatically at boot.
+
+**2. SysVinit (Older Distributions):**
+
+Some older distributions might still use SysVinit. Here's how to manage services:
+
+* **Start:**
+
+```bash
+sudo service <service_name> start
+```
+
+  Replace `<service_name>` with the actual service name.
+
+* **Stop:**
+
+```bash
+sudo service <service_name> stop
+```
+
+  Replace `<service_name>` with the actual service name.
+
+* **Enable (Start on Boot):**
+
+```bash
+sudo update-rc.d <service_name> defaults
+```
+
+  This creates symbolic links in the appropriate runlevels to start the service at boot.
+
+* **Disable (Prevent Automatic Start):**
+
+```bash
+sudo update-rc.d <service_name> remove
+```
+
+  This removes the symbolic links, preventing the service from starting automatically.
+
+**Identifying Networking Services:**
+
+The specific service name for managing your network connection can vary depending on your distribution. Here are some common examples:
+
+* `networking` (generic)
+* `network` (generic)
+* `dhclient` (DHCP client)
+* `ifup` (interface bring-up)
+* `<interface_name>` (specific network interface, e.g., `eth0`, `wlan0`)
+
+**Using `ifconfig` (Deprecated):**
+
+While traditionally used, `ifconfig` is being phased out. It's recommended to use the methods mentioned above for service management.  `ifconfig` can still be used to view or configure some network interface settings, but it's not ideal for starting or stopping network services.
+
+**Additional Tips:**
+
+* Always check your distribution's documentation for the exact service names and recommended management methods.
+* Use the `sudo systemctl status <service_name>` (systemd) or `sudo service <service_name> status` (SysVinit) command to view the status of a service (running, stopped, etc.).
+* Be cautious when disabling networking services, as you might lose network connectivity.
+
