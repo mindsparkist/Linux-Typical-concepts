@@ -503,3 +503,53 @@ While traditionally used, `ifconfig` is being phased out. It's recommended to us
 * Use the `sudo systemctl status <service_name>` (systemd) or `sudo service <service_name> status` (SysVinit) command to view the status of a service (running, stopped, etc.).
 * Be cautious when disabling networking services, as you might lose network connectivity.
 
+Both SCP (Secure Copy) and SFTP (SSH File Transfer Protocol) are methods for securely transferring files between computers on a network in Linux. They share the same goal but differ in their approach and capabilities:
+
+**SCP (Secure Copy):**
+
+* **Functionality:** SCP is a simple command-line tool that uses SSH (Secure Shell) for secure authentication and encryption of data during transfer.
+* **Process:** SCP establishes a secure connection using SSH and then copies the files over that connection. 
+* **Efficiency:** SCP is known for its efficiency, especially when transferring large files over high-latency networks.
+* **Limitations:** SCP offers basic file transfer functionality. It cannot list directories, create directories, or delete files remotely. These actions require separate SSH commands.
+
+**SFTP (SSH File Transfer Protocol):**
+
+* **Functionality:** SFTP is a file transfer protocol built on top of SSH. It provides a more interactive experience similar to FTP (File Transfer Protocol) but with the added security of SSH encryption.
+* **Features:** SFTP offers functionalities beyond simple file transfer. It allows you to:
+    * Browse directories on the remote server.
+    * Create, rename, and delete directories on the remote server.
+    * Resume interrupted transfers.
+* **Graphical Clients:**  Several graphical SFTP clients are available, providing a user-friendly interface for file transfer operations.
+
+Here's a table summarizing the key differences:
+
+| Feature        | SCP                               | SFTP                                 |
+|----------------|---------------------------------|---------------------------------------|
+| Protocol       | Built on top of SSH               | Built on top of SSH                   |
+| Functionality  | Basic file transfer                | Interactive file transfer, directory management |
+| Efficiency     | Generally faster, especially for large files | Slower due to additional features     |
+| Remote Management | Requires separate SSH commands     | Supports browsing, creating, deleting directories |
+| User Interface  | Command-line only                  | Command-line or graphical clients      |
+
+**Choosing Between SCP and SFTP:**
+
+* **SCP:** Use SCP when you need a quick and efficient way to transfer large files securely, especially over high-latency networks. It's a good choice for scripting file transfer tasks.
+* **SFTP:** Use SFTP when you need more than just basic file transfer capabilities.  SFTP is ideal for interactive file management tasks or if you prefer a user-friendly graphical interface for file browsing.
+
+Here are some example commands for using SCP and SFTP:
+
+**SCP:**
+
+```bash
+# Copy a file from local machine to remote server
+scp my_file.txt user@remote_server:/path/to/destination
+
+# Copy a file from remote server to local machine
+scp user@remote_server:/path/to/file.txt .
+```
+
+**SFTP:**
+
+* Using the `sftp` command-line tool directly (similar syntax to `scp`).
+* Using graphical SFTP clients provided by your desktop environment or file managers.
+
