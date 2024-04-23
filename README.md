@@ -83,6 +83,82 @@ It's always a good idea to consult your distribution's documentation for recomme
 * MBR disks can only have a maximum of 4 primary partitions.
 * To create more partitions, you can use an extended partition and logical partitions within it, but this adds complexity.
 
+## Formatting, Mounting, and Unmounting Partitions in Linux
+
+Once you've created your partitions, you can format them with a file system and mount them for use. Here's a breakdown of the steps:
+
+**Formatting a Partition:**
+
+1. **Identify the partition:** Use the `lsblk` command to list block devices and identify the partition you want to format (e.g., `/dev/sda1`).
+
+2. **Choose the file system:** Common file systems include ext4 (general purpose), xfs (large files), and btrfs (advanced features). Consider your needs when choosing a file system (see previous explanation of file systems).
+
+3. **Format the partition:** Use the `mkfs` command followed by the file system type and partition device:
+
+   ```bash
+   sudo mkfs.ext4 /dev/sda1  # Replace ext4 with your chosen file system (e.g., mkfs.xfs)
+   ```
+
+   **Warning:** Formatting erases all data on the partition. Ensure you have backups and the partition is correct before proceeding.
+
+**Mounting a Partition:**
+
+1. **Create a mount point:** This is a directory on your existing file system where the formatted partition will be accessible. You can create a new directory for this purpose (e.g., `sudo mkdir /mnt/mypartition`).
+
+2. **Mount the partition:** Use the `mount` command followed by the partition device and the mount point:
+
+   ```bash
+   sudo mount /dev/sda1 /mnt/mypartition
+   ```
+
+   Now, you can access the files on the formatted partition within the `/mnt/mypartition` directory.
+
+**Unmounting a Partition (Temporarily):**
+
+1. **Unmount the partition:** Use the `umount` command followed by the mount point:
+
+   ```bash
+   sudo umount /mnt/mypartition
+   ```
+
+   This disassociates the partition from the mount point, making it inaccessible until mounted again.
+
+**Unmounting Permanently (Making Changes Persistent):**
+
+**Option 1: Using fstab (Recommended):**
+
+The `/etc/fstab` file defines persistent mount points that are automatically mounted at boot time. Here's how to add your partition:
+
+1. **Open `/etc/fstab` with administrative privileges (e.g., using nano):**
+
+   ```bash
+   sudo nano /etc/fstab
+   ```
+
+2. **Add a new line at the end of the file with the following format:**
+
+   ```
+   /dev/sda1  /mnt/mypartition  ext4  defaults  0  0
+   ```
+
+   Replace `/dev/sda1` with your partition device, `/mnt/mypartition` with your mount point, and `ext4` with your chosen file system.
+
+3. **Save the changes and exit the editor.**
+
+Now, your partition will be automatically mounted at boot time based on the entries in `/etc/fstab`.
+
+**Option 2: Manual Mounting:**
+
+You can continue mounting the partition manually using the `mount` command whenever you need it.
+
+**Important Notes:**
+
+* Always be cautious when formatting and mounting partitions, as mistakes can lead to data loss.
+* Ensure you have backups before formatting any partitions.
+* Understand the `/etc/fstab` file and its syntax before editing it.
+
+By following these steps, you can effectively format partitions with file systems, mount them for use, and unmount them temporarily or permanently on your Linux system.
+
 ## GPT (GUID Partition Table) Disks
 
 **GPT** disks offer a more modern partitioning scheme with greater flexibility. However, managing GPT disks requires the `gdisk` command. 
