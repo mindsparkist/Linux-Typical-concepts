@@ -226,3 +226,36 @@ The process of formatting, mounting, and unmounting partitions is identical for 
 * While `fdisk` can be used to view GPT disks in a limited way, it's not recommended for creating or modifying partitions due to potential issues. Always use `gdisk` for GPT disk management.
 
 By following these steps and understanding the distinctions between MBR and GPT, you can effectively manage partitions on your Linux system. Remember to prioritize backups and handle partitions with caution to avoid data loss.
+
+The `partprobe` command in Linux is a handy tool used to inform the operating system kernel about changes made to partition tables on storage devices.  Here's a breakdown of its functionality and how it aids in managing partitions:
+
+**Purpose:**
+
+* **Informs Kernel About Partition Changes:** When you create, delete, or modify partitions on a disk using tools like `fdisk` or `gdisk`, the kernel might not be immediately aware of these changes. `partprobe` addresses this by rescanning the partition tables and notifying the kernel about the updated partition layout.
+
+**Benefits:**
+
+* **Ensures Accurate Partition Recognition:** By informing the kernel about changes, `partprobe` ensures that the system recognizes all available partitions and allows you to interact with them using tools like `mount` and file managers.
+* **Improves Efficiency:** Without `partprobe`, you might need to reboot the system for the kernel to detect new partitions. `partprobe` avoids unnecessary reboots, saving time and improving workflow.
+
+**Common Use Cases:**
+
+* **After Creating or Deleting Partitions:** Whenever you modify the partition layout on a disk using `fdisk`, `gdisk`, or other tools, running `partprobe` afterward is recommended to ensure the kernel recognizes the changes.
+* **Using New Storage Devices:** If you connect a new hard drive or external storage device that has existing partitions, running `partprobe` can help the system identify them for potential use.
+
+**How to Use `partprobe`:**
+
+The `partprobe` command is a simple standalone program. In a terminal window, you can use it with the following syntax:
+
+```bash
+sudo partprobe
+```
+
+This command scans all attached storage devices and notifies the kernel about any detected partitions. There are no additional options or arguments typically used with `partprobe`.
+
+**Additional Notes:**
+
+* **Root Privileges:** Running `partprobe` often requires root or sudo privileges because it interacts with kernel components.
+* **Automatic Usage in Distributions:** Some Linux distributions might automatically run `partprobe` during boot or after certain disk events, reducing the need for manual intervention. However, it's still a valuable tool to know for manual troubleshooting or specific use cases.
+
+By understanding the role of `partprobe`, you can effectively manage partitions on your Linux system and ensure the kernel is always up-to-date with the latest partition configuration.
