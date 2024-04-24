@@ -9,7 +9,7 @@ Linux offers a variety of file systems, each with its own strengths and weakness
 
 **2. XFS (Journaling File System):**
 
-* **Focus:**  Designed for high-performance computing environments and large file systems. It excels at handling very large files (exabytes) and provides good scalability for concurrent access.
+* **Focus:**  It can only be increased in size not decreased in size, Designed for high-performance computing environments and large file systems. It excels at handling very large files (exabytes) and provides good scalability for concurrent access.
 * **Drawbacks:** XFS can be less efficient for small files and might have slightly slower startup times compared to EXT4. Additionally, resizing an existing XFS filesystem can be more complex.
 
 **3. Btrfs (B-tree File System):**
