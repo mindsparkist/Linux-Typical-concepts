@@ -259,3 +259,96 @@ This command scans all attached storage devices and notifies the kernel about an
 * **Automatic Usage in Distributions:** Some Linux distributions might automatically run `partprobe` during boot or after certain disk events, reducing the need for manual intervention. However, it's still a valuable tool to know for manual troubleshooting or specific use cases.
 
 By understanding the role of `partprobe`, you can effectively manage partitions on your Linux system and ensure the kernel is always up-to-date with the latest partition configuration.
+
+
+## Managing Logical Volumes with LVM (Logical Volume Manager) in Linux
+
+LVM (Logical Volume Manager) in Linux provides a layer of abstraction for managing physical storage space. It allows you to create logical volumes (virtual disks) from underlying physical devices (partitions or entire disks). Here's a breakdown of creating, removing, and managing physical and logical volumes with LVM commands:
+
+**Creating Physical Volumes (PVs):**
+
+1. **Identify your physical devices:** Use the `fdisk -l` or `lsblk` command to list available disks or partitions.
+
+2. **Create a Physical Volume:** Use the `pvcreate` command followed by the device name of the partition or disk you want to use:
+
+   ```bash
+   sudo pvcreate /dev/sdb1  # Replace /dev/sdb1 with your actual device name
+   ```
+
+   This creates a physical volume using the specified device.
+
+**Removing Physical Volumes (PVs):**
+
+1. **Ensure the PV is not in use:** Use the `pvdisplay` command to check the status of your PVs. A PV cannot be removed if it's part of a volume group.
+
+2. **Remove the Physical Volume:** Use the `pvremove` command followed by the PV name:
+
+   ```bash
+   sudo pvremove /dev/sdb1  # Replace /dev/sdb1 with your actual PV name
+   ```
+
+   This removes the physical volume from LVM management.
+
+**Creating Volume Groups (VGs):**
+
+1. **Specify a name for your volume group:** Choose a descriptive name for your group of PVs.
+
+2. **Create the Volume Group:** Use the `vgcreate` command followed by the VG name and a space-separated list of PVs to include:
+
+   ```bash
+   sudo vgcreate my_volume_group /dev/sdb1 /dev/sdc1  # Replace names as needed
+   ```
+
+   This creates a volume group named `my_volume_group` using the specified physical volumes.
+
+**Assigning PVs to Existing VGs (Optional):**
+
+You can also add additional PVs to an existing volume group using the `vgextend` command:
+
+```bash
+sudo vgextend my_volume_group /dev/sdd1  # Add another PV named /dev/sdd1
+```
+
+**Creating Logical Volumes (LVs):**
+
+1. **Specify a name and size for your logical volume:** Choose a name and desired size for your virtual disk.
+
+2. **Create the Logical Volume:** Use the `lvcreate` command followed by the desired size (e.g., 10G), the volume group name, and the logical volume name:
+
+   ```bash
+   sudo lvcreate -L 10G my_volume_group my_logical_volume
+   ```
+
+   This creates a logical volume named `my_logical_volume` with a size of 10 gigabytes within the volume group `my_volume_group`.
+
+**Deleting Logical Volumes (LVs):**
+
+1. **Unmount the logical volume if mounted:** Ensure the logical volume is not currently mounted by any filesystem.
+
+2. **Delete the Logical Volume:** Use the `lvremove` command followed by the volume group name and the logical volume name:
+
+   ```bash
+   sudo lvremove my_volume_group my_logical_volume
+   ```
+
+   This removes the logical volume from the volume group.
+
+**Removing Volume Groups (VGs):**
+
+1. **Ensure all LVs are removed:** A volume group cannot be removed if it contains logical volumes.
+
+2. **Remove the Volume Group:** Use the `vgremove` command followed by the volume group name:
+
+   ```bash
+   sudo vgremove my_volume_group
+   ```
+
+   This removes the volume group and its associated metadata.
+
+**Important Notes:**
+
+* Always be cautious when working with LVM commands, as mistakes can lead to data loss.
+* Ensure you have backups before creating or modifying LVM configurations.
+* Use the `pvdisplay`, `vgdisplay`, and `lvdisplay` commands to view information about your PVs, VGs, and LVs, respectively.
+
+By following these steps and understanding the LVM concepts, you can effectively manage physical and logical storage on your Linux system.
