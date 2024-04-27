@@ -111,3 +111,51 @@ fsck <options> <file_system>
 
 By understanding the `fsck` command and its capabilities, you can effectively diagnose and potentially repair file system issues in your RHEL system. Remember to exercise caution, especially when using automatic repair options, and have backups in place whenever possible.
 
+
+Both `df -h` and `blkid` are useful commands in Linux for managing storage devices and file systems, but they serve different purposes:
+
+**df (Disk Free):**
+
+* **Function:** `df` (with the `-h` option for human-readable output) displays information about mounted file systems.
+* **Output:** It provides details like:
+    * **Filesystem:** The name of the file system (e.g., /dev/sda1)
+    * **Size:** Total size of the file system
+    * **Used:** Amount of space currently used on the file system
+    * **Available:** Amount of free space remaining on the file system
+    * **Use%:** Percentage of used space relative to the total size
+    * **Mounted on:** The directory where the file system is mounted (mount point)
+
+**Use Case:**
+
+Use `df -h` to get a quick overview of available disk space on mounted file systems. This helps you determine if you're running low on storage and need to free up space or add additional storage.
+
+**blkid (Block Device Identifier):**
+
+* **Function:** `blkid` displays information about block devices, including their unique identifiers like UUID (Universally Unique Identifier) and labels.
+* **Output:** It shows details like:
+    * **Device name:** Path to the block device (e.g., /dev/sda1)
+    * **UUID:** A unique identifier for the device
+    * **TYPE:** File system type formatted on the device (e.g., ext4, xfs)
+    * **LABEL:** A human-readable name assigned to the file system (if any)
+
+**Use Case:**
+
+Use `blkid` to identify the specific block devices and their unique identifiers. This information is useful for:
+    * Mounting file systems using UUID or label instead of device paths in `/etc/fstab` (more reliable across reboots).
+    * Identifying partitions or disks, especially when dealing with multiple storage devices.
+    * Recovering data in situations where device names might change.
+
+**Here's a table summarizing the key differences:**
+
+| Feature        | df -h                                         | blkid                                        |
+|----------------|----------------------------------------------|-----------------------------------------------|
+| **Function**     | Shows information about mounted file systems   | Shows information about block devices          |
+| **Output**       | Size, Used, Available, Mount point             | UUID, TYPE, LABEL (if any)                     |
+| **Useful for**   | Checking available disk space                 | Identifying devices, using UUIDs/Labels for mounting |
+
+**In Conclusion:**
+
+* Use `df -h` to monitor disk space usage on mounted file systems.
+* Use `blkid` to identify block devices, their types, and unique identifiers for better management and mounting flexibility.
+
+Both commands are valuable tools for understanding and managing storage in your Linux system. They provide complementary information for different purposes.
