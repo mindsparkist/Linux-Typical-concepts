@@ -352,3 +352,72 @@ sudo vgextend my_volume_group /dev/sdd1  # Add another PV named /dev/sdd1
 * Use the `pvdisplay`, `vgdisplay`, and `lvdisplay` commands to view information about your PVs, VGs, and LVs, respectively.
 
 By following these steps and understanding the LVM concepts, you can effectively manage physical and logical storage on your Linux system.
+
+Here's how to configure systems to mount file systems at boot by UUID or Label in RHEL (Red Hat Enterprise Linux):
+
+**1. Identifying File System Details:**
+
+* Boot up your RHEL system.
+* Open a terminal window.
+* Use the `blkid` command to list block devices and their associated UUIDs and labels.
+
+  ```bash
+  sudo blkid
+  ```
+
+  Look for the block device representing the partition you want to mount automatically. Identify its UUID or label (a human-readable name assigned to the file system).
+
+**2. Editing the fstab File:**
+
+* The `/etc/fstab` file controls how file systems are mounted at boot time. Edit it with root privileges using a text editor like nano:
+
+  ```bash
+  sudo nano /etc/fstab
+  ```
+
+**3. Adding/Modifying an Entry:**
+
+* Locate an existing entry for the file system you want to modify (if applicable) or add a new line at the end of the file for a new mount point.
+* Each line in `/etc/fstab` has six fields separated by spaces:
+
+  * **Block device:** This can be specified by UUID (e.g., UUID=...), label (e.g., LABEL=...), or device path (e.g., /dev/sda1). It's recommended to use UUID or label for consistency across reboots.
+  * **Mount point:** This is the directory where the file system will be mounted. Choose a suitable directory for your needs (e.g., /home, /data).
+  * **File system type:** Specify the file system type, such as ext4, xfs, or btrfs, depending on your file system format.
+  * **Mount options:** Comma-separated options that control how the file system is mounted (e.g., defaults, noatime). Common options include `defaults` (default options), `noatime` (don't update access times), and `discard` (trim SSDs).
+  * **Dump:** This field specifies the numeric dump frequency (used for system backups, often set to 0 for non-critical partitions).
+  * **Fsck order:** This field defines the order in which the fsck (file system check) utility is run during boot (often set to 0 or 1 depending on priority).
+
+**4. Example Entries (Replace with your details):**
+
+* **Using UUID:**
+
+  ```
+  UUID=b3sg2t-… /home ext4 defaults 0 2
+  ```
+
+* **Using Label:**
+
+  ```
+  LABEL=HOME /home ext4 defaults 0 2
+  ```
+
+**5. Saving the Changes:**
+
+* In your text editor (nano), press `Ctrl+O` to save the changes.
+* Press `Ctrl+X` to exit the editor.
+
+**6. Verifying the Configuration (Optional):**
+
+* Use the `mount -a` command to attempt mounting all file systems listed in `/etc/fstab`. This helps identify any errors in your configuration.
+
+**7. Reboot (Optional):**
+
+* To apply the changes permanently, you can reboot your system. The mounted file system(s) will be accessible at the specified mount point(s) upon boot.
+
+**Additional Notes:**
+
+* It's recommended to use UUID or label instead of device paths for mounting, as they provide more consistent behavior across reboots, even if device names change.
+* Choose appropriate mount options based on your file system and usage needs. Refer to the `man mount` command for detailed information about available options.
+* Editing `/etc/fstab` requires root privileges. Ensure you understand the implications of your changes before modifying this file.
+
+By following these steps, you can effectively configure systems to mount file systems automatically at boot time using UUID or label in RHEL.
