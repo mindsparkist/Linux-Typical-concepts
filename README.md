@@ -47,3 +47,67 @@ sudo -l
 If you have sudo access, it will display the commands you're authorized to run with sudo. If you don't have access or the security policy disallows it, you'll see an error message like `"User [your_username] is not allowed to run sudo on [hostname]"`
 
 **Caution:** Editing the `/etc/sudoers` file directly to grant sudo access is not recommended due to potential security risks. Consult the RHEL documentation or seek help from a system administrator for proper user permission management.
+
+The `fsck` (File System Consistency Check) is a crucial tool in RHEL (Red Hat Enterprise Linux) for checking and repairing potential errors in file system structures. Here's a breakdown of its functionality and how to use it:
+
+**Purpose:**
+
+* The `fsck` command scans a specified file system for inconsistencies or damage that might arise due to unexpected shutdowns, power outages, or hardware failures.
+* If errors are detected, `fsck` can attempt to automatically fix them, restoring the integrity of the file system.
+
+**Common Use Cases:**
+
+* **Boot Time Checks:** RHEL automatically runs `fsck` on critical file systems (like the root partition) during the boot process to ensure a healthy file system state before continuing.
+* **Manual Checks:** You can also use `fsck` manually to diagnose and potentially repair issues in file systems, especially after unexpected system crashes.
+
+**Important Note:**
+
+Running `fsck` with certain options, particularly `-a` (automatic repair), can potentially cause data loss if the file system is severely damaged. It's recommended to proceed with caution and ideally have backups available before running `fsck` for repairs.
+
+**Using `fsck` in RHEL:**
+
+The basic syntax for `fsck` is:
+
+```bash
+fsck <options> <file_system>
+```
+
+* `<options>`: Specify options that control the behavior of `fsck`. Some common options include:
+    * `-a`: Automatically repair detected errors (use with caution).
+    * `-p`:  Prompt the user for confirmation before attempting repairs.
+    * `-t <type>`: Specify the file system type (e.g., `-t ext4`).
+* `<file_system>`:  This can be represented by:
+    * The device path of the partition (e.g., `/dev/sda1`).
+    * The mount point of the file system (e.g., `/home`).
+
+**Here are some examples of using `fsck` in RHEL:**
+
+* **Check and Repair the Root File System (Automatic):**
+
+   **Warning:** This should only be done in rescue mode, **not** during normal boot.
+
+   ```bash
+   fsck -a /dev/sda1  # Replace /dev/sda1 with your actual root partition device
+   ```
+
+* **Check the Root File System (Prompting for Repairs):**
+
+   ```bash
+   fsck -p /dev/sda1
+   ```
+
+   This checks the root file system and prompts you to confirm any repairs before proceeding.
+
+* **Check a Specific File System by Mount Point:**
+
+   ```bash
+   fsck /home  # Assuming /home is mounted on a separate partition
+   ```
+
+**Additional Notes:**
+
+* The specific file system type (e.g., ext4, xfs) might influence the available options and behavior of `fsck`. It's recommended to consult the documentation for your specific file system for detailed information.
+* In RHEL, the file system check during boot is often handled by fsck.service or similar systemd services. You can usually find logs related to fsck checks in `/var/log/messages`.
+
+By understanding the `fsck` command and its capabilities, you can effectively diagnose and potentially repair file system issues in your RHEL system. Remember to exercise caution, especially when using automatic repair options, and have backups in place whenever possible.
+
