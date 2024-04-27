@@ -159,3 +159,39 @@ Use `blkid` to identify the specific block devices and their unique identifiers.
 * Use `blkid` to identify block devices, their types, and unique identifiers for better management and mounting flexibility.
 
 Both commands are valuable tools for understanding and managing storage in your Linux system. They provide complementary information for different purposes.
+
+The `free -m` command in Linux displays information about memory usage on your system, with the output shown in megabytes (M). Here's a breakdown of what it shows and how it can be helpful:
+
+**Output:**
+
+The `free -m` command typically displays three main sections:
+
+1. **Total:** This line shows the total amount of memory available on your system in Megabytes (MiB).
+2. **Used:** This line shows the amount of memory currently in use by applications, the kernel, and other processes, also in Megabytes.
+3. **Free:** This line shows the amount of memory that is currently free and available for allocation, in Megabytes.
+
+**Additional Information (Optional):**
+
+Depending on your system configuration, `free -m` might also display:
+
+* **Shared:** Memory that can be shared between multiple processes.
+* **Buffers:** Memory used for buffering by the kernel to improve performance.
+* **Cached:** Memory used for caching data to speed up access.
+* **Available:** This might be a calculated value based on Free + Buffers + Cached, representing the total usable memory.
+
+**Understanding Memory Usage:**
+
+By analyzing the output of `free -m`, you can gain insights into your system's memory utilization. Here's what each value indicates:
+
+* **High Used:** If the Used value is close to the Total value, it might indicate that your system is running low on memory and applications might experience performance issues. You could consider closing unnecessary programs or adding more RAM.
+* **Sufficient Free:** A healthy amount of Free memory ensures your system has room to run applications smoothly. However, a very high Free value might not necessarily be bad, as the system might be efficiently caching data for faster access.
+
+**Using `free -m` Effectively:**
+
+* The `free -m` command is a quick way to get a snapshot of your system's memory usage at a specific point in time.
+* To monitor memory usage over time, consider using tools like `htop` or `watch free -m` (which repeatedly runs `free -m` with a short delay).
+* For a more detailed breakdown of memory usage, including information about memory allocation by processes, you can explore tools like `vmstat` or `top`.
+
+**In Conclusion:**
+
+The `free -m` command is a handy tool for understanding basic memory usage on your Linux system. By monitoring memory utilization, you can make informed decisions about resource allocation and application management to ensure smooth system performance.
