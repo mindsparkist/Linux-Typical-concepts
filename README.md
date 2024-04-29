@@ -294,3 +294,37 @@ By analyzing the output of `free -m`, you can gain insights into your system's m
 **In Conclusion:**
 
 The `free -m` command is a handy tool for understanding basic memory usage on your Linux system. By monitoring memory utilization, you can make informed decisions about resource allocation and application management to ensure smooth system performance.
+
+Both `#!/bin/bash` and `#!/bin/sh` are shebang lines, which are used in scripting languages like Bash to specify the interpreter that should be used to execute the script. Here's a breakdown of the differences and when to use each:
+
+**#!/bin/bash:**
+
+* **Interpreter:** This specifies the Bash shell interpreter located at `/bin/bash`.
+* **Functionality:**  This line tells the system to use the full features and functionalities of the Bash shell to execute the script. Bash is a powerful shell with many built-in commands, control structures, and scripting capabilities.
+* **Use Case:** Use this shebang line when your script relies on features specific to Bash, such as:
+    * Bash arrays
+    * Advanced conditional statements ([[ ]] syntax)
+    * Bash-specific functions and keywords
+
+**#!/bin/sh:**
+
+* **Interpreter:** This line traditionally specifies the generic Bourne shell interpreter, typically located at `/bin/sh`. However, on many modern Linux distributions, `/bin/sh` is a symbolic link that points to another shell, often Bash itself.
+* **Functionality:** This line instructs the system to use a more basic shell interpreter to execute the script. This interpreter might have a limited feature set compared to Bash.
+* **Use Case:** Use this shebang line when:
+    * Your script needs to be compatible with a wider range of systems, especially older ones that might not have Bash installed by default.
+    * You only use basic shell functionalities like variable manipulation, simple control flow (if/else), and common shell commands that are POSIX-compliant (part of the Portable Operating System Interface standard).
+
+**Here's a table summarizing the key differences:**
+
+| Shebang Line          | Interpreter                               | Functionality                                 | Use Case                                          |
+|------------------------|----------------------------------------------|-------------------------------------------------|----------------------------------------------------|
+| #!/bin/bash            | Bash shell interpreter (`/bin/bash`)          | Full Bash features and functionalities           | Scripts using Bash-specific features              |
+| #!/bin/sh              | Bourne shell interpreter (`/bin/sh`) (might   | More basic shell functionalities (may vary)      | Portable scripts, wider system compatibility      |
+|                        | be a symbolic link to Bash on some systems)   |                                                 |                                                    |
+
+**Additional Considerations:**
+
+* Even if `/bin/sh` points to Bash on your system, using `#!/bin/bash` explicitly ensures your script leverages the full capabilities of Bash.
+* For maximum portability and compatibility, consider using `#!/bin/sh` and avoid using Bash-specific features in your script. If you need those features, document the requirement for a Bash interpreter.
+
+By understanding the distinction between `#!/bin/bash` and `#!/bin/sh`, you can choose the appropriate shebang line for your scripts, ensuring compatibility and functionality across different systems.
