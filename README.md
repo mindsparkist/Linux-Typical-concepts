@@ -505,3 +505,37 @@ set -x  # Trace script execution (for debugging)
 * Explore the various `set -o` options and their functionalities by referring to the Bash manual (`man bash`).
 
 By understanding these `set` options, you can enhance your Bash scripting by enabling tracing, enforcing error handling, and customizing shell behavior for your specific needs.
+
+In logging, different levels are used to categorize the severity and detail of messages recorded by a program or system. These levels help filter and prioritize log information, making it easier to identify and troubleshoot issues. Here's a breakdown of three common logging levels:
+
+**1. Trace Level Logging:**
+
+* **Description:** Trace level logging provides the most detailed information about a program's execution. It captures every step, function call, variable change, and internal operation.
+* **Purpose:** Trace logs are primarily used for deep debugging purposes. They offer a granular view of the program's behavior, aiding developers in pinpointing the exact cause of an issue.
+* **Use Case:** Trace logging is typically enabled only during development or troubleshooting specific problems. Due to the vast amount of data generated, it's not recommended for regular production use, as it can overload storage and hinder performance.
+
+**2. Error Level Logging:**
+
+* **Description:** Error level logging records messages that indicate errors or unexpected conditions encountered by the program. These messages typically include details about the error, such as error codes, error messages, and stack traces.
+* **Purpose:** Error logs are crucial for identifying and resolving issues that prevent the program from functioning correctly. They provide valuable information for developers and system administrators to diagnose and fix problems.
+* **Use Case:** Error level logging is essential for monitoring system health and troubleshooting errors in production environments.  It helps identify issues that might impact functionality or user experience.
+
+**3. Info Level Logging:**
+
+* **Description:** Info level logging captures informative messages about significant program events or state changes. These messages provide context about what the program is doing without excessive detail.
+* **Purpose:** Info logs are useful for understanding the program's overall flow, tracking its progress, and monitoring its behavior. They offer a balance between detailed debugging information and concise operational awareness.
+* **Use Case:** Info level logging is commonly used in production environments to track program execution, identify potential issues, and monitor system activity. It provides a general picture of what's happening without overwhelming log files with low-level details.
+
+**Here's a table summarizing the key differences:**
+
+| Logging Level | Description                                         | Purpose                                                | Use Case                                               |
+|----------------|-------------------------------------------------|---------------------------------------------------------|---------------------------------------------------------|
+| Trace          | Most detailed information about execution          | Deep debugging, pinpointing exact cause of issues        | Development, troubleshooting specific problems          |
+| Error          | Messages indicating errors or unexpected conditions | Identifying and resolving issues that prevent functionality | Production monitoring, troubleshooting errors             |
+| Info           | Informative messages about significant program events | Understanding program flow, tracking progress, monitoring  | Production monitoring, general operational awareness    |
+
+**Additional Levels:**
+
+Many logging frameworks and libraries offer additional levels like warning, debug, and others, providing a finer-grained control over the verbosity of logs. The specific levels and their functionalities might vary depending on the chosen logging system.
+
+By understanding these logging levels, you can effectively configure your logging system to capture the right amount of detail for your needs. This helps maintain clear and informative logs, simplifying troubleshooting and monitoring the health of your programs and systems.
