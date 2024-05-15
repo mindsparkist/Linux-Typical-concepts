@@ -259,3 +259,99 @@ sudo umount /mnt/nfs_share
 
 ```bash
 umount /mnt/xfs_
+
+Sure, I'd be happy to explain how to mount and unmount CIFS (Common Internet File System) and NFS (Network File System) network file systems. These protocols allow you to access and share files over a network, making it convenient to work with remote files as if they were local.
+
+Mounting CIFS (SMB/Windows) File System:
+1. Install the required packages (e.g., `cifs-utils` on Ubuntu/Debian, `cifs-utils` or `samba-client` on RHEL/CentOS).
+2. Create a mount point directory if it doesn't exist: `sudo mkdir /mnt/share`
+3. Mount the CIFS share with the following command:
+   ```
+   sudo mount -t cifs -o username=USER,password=PASSWORD //server/share /mnt/share
+   ```
+   Replace `USER` and `PASSWORD` with your credentials, `server` with the IP address or hostname of the remote server, and `share` with the name of the shared folder.
+
+Unmounting CIFS File System:
+1. Unmount the share with the following command:
+   ```
+   sudo umount /mnt/share
+   ```
+
+Mounting NFS File System:
+1. Install the required packages (e.g., `nfs-common` on Ubuntu/Debian, `nfs-utils` on RHEL/CentOS).
+2. Create a mount point directory if it doesn't exist: `sudo mkdir /mnt/nfsshare`
+3. Mount the NFS share with the following command:
+   ```
+   sudo mount -t nfs server:/remote/share /mnt/nfsshare
+   ```
+   Replace `server` with the IP address or hostname of the remote server, and `/remote/share` with the path to the shared directory on the server.
+
+Unmounting NFS File System:
+1. Unmount the share with the following command:
+   ```
+   sudo umount /mnt/nfsshare
+   ```
+
+Note:
+- For CIFS mounts, you may need to adjust permissions after mounting to allow read/write access.
+- For NFS mounts, make sure the appropriate firewall ports are open on the server and client (e.g., port 111 and 2049 for NFS).
+- You can also add mount entries to the `/etc/fstab` file to automount these shares at system boot.
+
+Remember to replace the placeholders (e.g., `USER`, `PASSWORD`, `server`, `share`) with the appropriate values for your environment. Let me know if you need any further assistance or have additional questions!
+
+
+Absolutely, I can show you how to mount CIFS and NFS shares permanently by adding entries to the `/etc/fstab` file.
+
+Mounting CIFS Share Permanently:
+1. First, create a credentials file to store your username and password:
+   ```
+   sudo mkdir /etc/cifs_credentials
+   sudo nano /etc/cifs_credentials/cifs.credentials
+   ```
+   In the `cifs.credentials` file, add the following line:
+   ```
+   username=YOUR_USERNAME
+   password=YOUR_PASSWORD
+   ```
+   Replace `YOUR_USERNAME` and `YOUR_PASSWORD` with your actual credentials.
+
+2. Next, add an entry to the `/etc/fstab` file:
+   ```
+   sudo nano /etc/fstab
+   ```
+   Add the following line at the end of the file:
+   ```
+   //server/share /mnt/cifs_share cifs credentials=/etc/cifs_credentials/cifs.credentials,iocharset=utf8,sec=ntlm 0 0
+   ```
+   Replace `server` and `share` with your server details and share name. The `iocharset=utf8` option ensures proper encoding, and `sec=ntlm` specifies the authentication method.
+
+Mounting NFS Share Permanently:
+1. Open the `/etc/fstab` file:
+   ```
+   sudo nano /etc/fstab
+   ```
+2. Add the following line at the end of the file:
+   ```
+   server:/remote/share /mnt/nfs_share nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0
+   ```
+   Replace `server` with the IP address or hostname of the NFS server, and `/remote/share` with the path to the shared directory on the server.
+
+The options used in the NFS mount are:
+- `auto`: Mount the share automatically at boot.
+- `nofail`: Don't report an error if the share is not available at boot.
+- `noatime`: Don't update the access time of files when reading them.
+- `nolock`: Disable file locking.
+- `intr`: Allow interrupting the mount process with a signal.
+- `tcp`: Use TCP instead of UDP for the mount.
+- `actimeo=1800`: Set the attribute cache timeout to 1800 seconds (30 minutes).
+
+3. Save and exit the `/etc/fstab` file.
+
+After adding the entries, you can mount the shares immediately with the following command:
+```
+sudo mount -a
+```
+
+The shares will now be mounted automatically at boot time. Remember to create the mount points (`/mnt/cifs_share` and `/mnt/nfs_share` in the examples) before mounting if they don't exist.
+
+Note: Be careful when editing the `/etc/fstab` file, as incorrect entries could prevent your system from booting properly. Always double-check your entries and make a backup before making changes.
