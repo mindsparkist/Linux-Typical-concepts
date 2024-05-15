@@ -338,3 +338,41 @@ sudo umount /mnt/cifs_share  # Or /mnt/nfs_share depending on the file system
 * Ensure proper firewall rules are in place on both the server and client to allow access to the NFS or CIFS ports (typically NFS: TCP port 2049, CIFS/SMB: TCP port 445).
 * Refer to the official documentation for your specific Linux distribution and chosen network filesystem software for more advanced configuration options and troubleshooting steps.
 
+Sure, I'd be happy to explain how to mount and unmount CIFS (Common Internet File System) and NFS (Network File System) network file systems. These protocols allow you to access and share files over a network, making it convenient to work with remote files as if they were local.
+
+Mounting CIFS (SMB/Windows) File System:
+1. Install the required packages (e.g., `cifs-utils` on Ubuntu/Debian, `cifs-utils` or `samba-client` on RHEL/CentOS).
+2. Create a mount point directory if it doesn't exist: `sudo mkdir /mnt/share`
+3. Mount the CIFS share with the following command:
+   ```
+   sudo mount -t cifs -o username=USER,password=PASSWORD //server/share /mnt/share
+   ```
+   Replace `USER` and `PASSWORD` with your credentials, `server` with the IP address or hostname of the remote server, and `share` with the name of the shared folder.
+
+Unmounting CIFS File System:
+1. Unmount the share with the following command:
+   ```
+   sudo umount /mnt/share
+   ```
+
+Mounting NFS File System:
+1. Install the required packages (e.g., `nfs-common` on Ubuntu/Debian, `nfs-utils` on RHEL/CentOS).
+2. Create a mount point directory if it doesn't exist: `sudo mkdir /mnt/nfsshare`
+3. Mount the NFS share with the following command:
+   ```
+   sudo mount -t nfs server:/remote/share /mnt/nfsshare
+   ```
+   Replace `server` with the IP address or hostname of the remote server, and `/remote/share` with the path to the shared directory on the server.
+
+Unmounting NFS File System:
+1. Unmount the share with the following command:
+   ```
+   sudo umount /mnt/nfsshare
+   ```
+
+Note:
+- For CIFS mounts, you may need to adjust permissions after mounting to allow read/write access.
+- For NFS mounts, make sure the appropriate firewall ports are open on the server and client (e.g., port 111 and 2049 for NFS).
+- You can also add mount entries to the `/etc/fstab` file to automount these shares at system boot.
+
+Remember to replace the placeholders (e.g., `USER`, `PASSWORD`, `server`, `share`) with the appropriate values for your environment. Let me know if you need any further assistance or have additional questions!
