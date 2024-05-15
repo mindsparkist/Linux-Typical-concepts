@@ -255,173 +255,86 @@ sudo umount /mnt/nfs_share
 * Refer to the official documentation for your specific Linux distribution and chosen network filesystem software for more advanced configuration options and troubleshooting steps.
 ```
 
-**Unmount:**
+## Mounting and Unmounting CIFS (SMB) and NFS Network File Systems
+
+Here's a guide on mounting and unmounting CIFS (Server Message Block, commonly known as SMB) and NFS (Network File System) network file systems in Linux:
+
+**1. CIFS (SMB) Mounting:**
+
+**Client-Side Setup (Linux Machine):**
+
+* **Install necessary package:**
 
 ```bash
-umount /mnt/xfs_
-
-Sure, I'd be happy to explain how to mount and unmount CIFS (Common Internet File System) and NFS (Network File System) network file systems. These protocols allow you to access and share files over a network, making it convenient to work with remote files as if they were local.
-
-Mounting CIFS (SMB/Windows) File System:
-1. Install the required packages (e.g., `cifs-utils` on Ubuntu/Debian, `cifs-utils` or `samba-client` on RHEL/CentOS).
-2. Create a mount point directory if it doesn't exist: `sudo mkdir /mnt/share`
-3. Mount the CIFS share with the following command:
-   ```
-   sudo mount -t cifs -o username=USER,password=PASSWORD //server/share /mnt/share
-   ```
-   Replace `USER` and `PASSWORD` with your credentials, `server` with the IP address or hostname of the remote server, and `share` with the name of the shared folder.
-
-Unmounting CIFS File System:
-1. Unmount the share with the following command:
-   ```
-   sudo umount /mnt/share
-   ```
-
-Mounting NFS File System:
-1. Install the required packages (e.g., `nfs-common` on Ubuntu/Debian, `nfs-utils` on RHEL/CentOS).
-2. Create a mount point directory if it doesn't exist: `sudo mkdir /mnt/nfsshare`
-3. Mount the NFS share with the following command:
-   ```
-   sudo mount -t nfs server:/remote/share /mnt/nfsshare
-   ```
-   Replace `server` with the IP address or hostname of the remote server, and `/remote/share` with the path to the shared directory on the server.
-
-Unmounting NFS File System:
-1. Unmount the share with the following command:
-   ```
-   sudo umount /mnt/nfsshare
-   ```
-
-Note:
-- For CIFS mounts, you may need to adjust permissions after mounting to allow read/write access.
-- For NFS mounts, make sure the appropriate firewall ports are open on the server and client (e.g., port 111 and 2049 for NFS).
-- You can also add mount entries to the `/etc/fstab` file to automount these shares at system boot.
-
-Remember to replace the placeholders (e.g., `USER`, `PASSWORD`, `server`, `share`) with the appropriate values for your environment. Let me know if you need any further assistance or have additional questions!
-
-
-Absolutely, I can show you how to mount CIFS and NFS shares permanently by adding entries to the `/etc/fstab` file.
-
-Mounting CIFS Share Permanently:
-1. First, create a credentials file to store your username and password:
-   ```
-   sudo mkdir /etc/cifs_credentials
-   sudo nano /etc/cifs_credentials/cifs.credentials
-   ```
-   In the `cifs.credentials` file, add the following line:
-   ```
-   username=YOUR_USERNAME
-   password=YOUR_PASSWORD
-   ```
-   Replace `YOUR_USERNAME` and `YOUR_PASSWORD` with your actual credentials.
-
-2. Next, add an entry to the `/etc/fstab` file:
-   ```
-   sudo nano /etc/fstab
-   ```
-   Add the following line at the end of the file:
-   ```
-   //server/share /mnt/cifs_share cifs credentials=/etc/cifs_credentials/cifs.credentials,iocharset=utf8,sec=ntlm 0 0
-   ```
-   Replace `server` and `share` with your server details and share name. The `iocharset=utf8` option ensures proper encoding, and `sec=ntlm` specifies the authentication method.
-
-Mounting NFS Share Permanently:
-1. Open the `/etc/fstab` file:
-   ```
-   sudo nano /etc/fstab
-   ```
-2. Add the following line at the end of the file:
-   ```
-   server:/remote/share /mnt/nfs_share nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0
-   ```
-   Replace `server` with the IP address or hostname of the NFS server, and `/remote/share` with the path to the shared directory on the server.
-
-The options used in the NFS mount are:
-- `auto`: Mount the share automatically at boot.
-- `nofail`: Don't report an error if the share is not available at boot.
-- `noatime`: Don't update the access time of files when reading them.
-- `nolock`: Disable file locking.
-- `intr`: Allow interrupting the mount process with a signal.
-- `tcp`: Use TCP instead of UDP for the mount.
-- `actimeo=1800`: Set the attribute cache timeout to 1800 seconds (30 minutes).
-
-3. Save and exit the `/etc/fstab` file.
-
-After adding the entries, you can mount the shares immediately with the following command:
-```
-sudo mount -a
+  sudo apt install cifs-utils  # For Debian/Ubuntu-based systems
+  sudo yum install samba-client  # For Red Hat/CentOS-based systems
 ```
 
-The shares will now be mounted automatically at boot time. Remember to create the mount points (`/mnt/cifs_share` and `/mnt/nfs_share` in the examples) before mounting if they don't exist.
+**Mounting the Share:**
 
-Note: Be careful when editing the `/etc/fstab` file, as incorrect entries could prevent your system from booting properly. Always double-check your entries and make a backup before making changes.
+```bash
+# Replace the following placeholders with your actual details:
+server_address=//server_ip_or_hostname/share_name
+mount_point=/mnt/cifs_share
+username=your_username  # Optional for public shares
+password=your_password  # Optional for public shares
 
-## ACLs (Access Control Lists) in Linux
+# Mount the share with credentials (for private shares) - Use with caution!
+sudo mount -t cifs $server_address $mount_point -o username=$username,password=$password
 
-**What are ACLs?**
-
-ACLs (Access Control Lists) offer a more granular approach to managing file and directory permissions in Linux compared to the traditional Unix model (read, write, execute for owner, group, and others).
-
-**Benefits of ACLs:**
-
-* Define permissions for specific users or groups, beyond the standard owner, group, and others.
-* Grant or deny access to specific users/groups on shared resources.
-
-**Enabling ACL Support:**
-
-* ACLs are typically disabled by default. Enable them during filesystem creation or mounting.
-
-**Examples (ext4 filesystem):**
-
-* Create ext4 filesystem with ACL support:
-  ```
-  mkfs.ext4 -j -O acl /dev/sdXY
-  ```
-* Mount existing filesystem with ACL support:
-  ```
-  mount -o acl /dev/sdXY /mount/point
-  ```
-
-**Setting ACLs (using `setfacl`):**
-
-* Grant read-write access to a user:
-  ```
-  setfacl -m u:username:rw file_or_directory
-  ```
-* Grant read access to a group:
-  ```
-  setfacl -m g:groupname:r file_or_directory
-  ```
-* Remove a specific ACL entry:
-  ```
-  setfacl -x u:username file_or_directory
-  ```
-
-**Viewing ACLs (using `getfacl`):**
-
-```
-getfacl file_or_directory
-```
-
-**Removing ACLs:**
-
-Revert to traditional Unix permissions by removing all ACL entries:
-
-```
-setfacl -b file_or_directory
-```
-
-**Default ACLs:**
-
-Set default ACLs on directories to apply to new files/subdirectories:
-
-```
-setfacl -m d:u:username:rw directory
+# Mount the share without credentials (for public shares) -  **Extreme Caution Advised!**
+# This exposes your username and password in plain text, only use on trusted networks.
+sudo mount -t cifs $server_address $mount_point
 ```
 
 **Important Notes:**
 
-* Not all file systems support ACLs.
-* Specific requirements or configurations might be needed for ACL support on certain file systems (e.g., NFS).
-* Use ACLs judiciously, considering their complexity compared to traditional permissions.
+* Mounting network shares with credentials embedded in the command (like the CIFS example with username/password) is generally discouraged due to security concerns. Consider using keytabs or more secure authentication methods if needed.
+
+**2. NFS Mounting:**
+
+**Server-Side Setup (NFS Server Machine):**
+
+* **Install and configure NFS server package:**  The specific package name and configuration steps might vary depending on your Linux distribution. Refer to your system's documentation for details. Common package names include `nfs-kernel-server` or `nfs-server`.
+* **Export the share directory:**  Use the `/etc/exports` file to define which directories to share and client permissions. For example:
+
+```
+/home/nfs_share *(rw,sync,no_subtree_check)
+```
+
+  - This line exports the `/home/nfs_share` directory with read-write (`rw`) access for all clients (`*`).
+  - Options like `sync` ensure data is written to disk before acknowledging the write operation, and `no_subtree_check` improves performance.
+
+* **Restart the NFS server service:**  Use a command like `sudo systemctl restart nfs-kernel-server` (or the appropriate service name for your system) to apply the changes.
+
+**Client-Side Setup (Linux Machine):**
+
+* **Install necessary package:**
+  ```bash
+  sudo apt install nfs-common  # For Debian/Ubuntu-based systems
+  sudo yum install nfs-utils  # For Red Hat/CentOS-based systems
+  ```
+
+**Mounting the Share:**
+
+```bash
+# Replace the following placeholders with your actual details:
+server_address=server_ip_or_hostname
+share_directory=/path/to/shared/directory
+mount_point=/mnt/nfs_share
+
+# Mount the NFS share
+sudo mount -t nfs $server_address:$share_directory $mount_point
+```
+
+**Unmounting (for both CIFS and NFS):**
+
+```bash
+sudo umount /mnt/cifs_share  # Or /mnt/nfs_share depending on the file system
+```
+
+**Additional Considerations:**
+
+* Ensure proper firewall rules are in place on both the server and client to allow access to the NFS or CIFS ports (typically NFS: TCP port 2049, CIFS/SMB: TCP port 445).
+* Refer to the official documentation for your specific Linux distribution and chosen network filesystem software for more advanced configuration options and troubleshooting steps.
 
