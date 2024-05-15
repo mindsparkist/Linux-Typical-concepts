@@ -376,3 +376,65 @@ Note:
 - You can also add mount entries to the `/etc/fstab` file to automount these shares at system boot.
 
 Remember to replace the placeholders (e.g., `USER`, `PASSWORD`, `server`, `share`) with the appropriate values for your environment. Let me know if you need any further assistance or have additional questions!
+
+ACLs (Access Control Lists) in Linux provide a more fine-grained way to control file and directory permissions beyond the traditional Unix permissions (read, write, and execute for owner, group, and others).
+
+ACLs allow you to define permissions for specific users or groups, in addition to the standard owner, group, and others. This can be useful in situations where you need to grant or deny access to specific users or groups on shared files or directories.
+
+Here's a brief overview of working with ACLs in Linux:
+
+1. **Enabling ACL Support**:
+   ACLs are not enabled by default on most Linux file systems. You need to enable ACL support when creating or mounting a file system. For example, to create an ext4 file system with ACL support:
+
+   ```
+   mkfs.ext4 -j -O acl /dev/sdXY
+   ```
+
+   Or, to mount an existing file system with ACL support:
+
+   ```
+   mount -o acl /dev/sdXY /mount/point
+   ```
+
+2. **Setting ACLs**:
+   Once ACL support is enabled, you can use the `setfacl` command to modify ACLs. Here are some common examples:
+
+   - Set read and write access for a specific user:
+     ```
+     setfacl -m u:username:rw file_or_directory
+     ```
+
+   - Set read access for a specific group:
+     ```
+     setfacl -m g:groupname:r file_or_directory
+     ```
+
+   - Remove a specific ACL entry:
+     ```
+     setfacl -x u:username file_or_directory
+     ```
+
+3. **Viewing ACLs**:
+   To view the ACLs set on a file or directory, use the `getfacl` command:
+
+   ```
+   getfacl file_or_directory
+   ```
+
+4. **Removing ACLs**:
+   To remove all ACL entries and revert to the traditional Unix permissions, use the following command:
+
+   ```
+   setfacl -b file_or_directory
+   ```
+
+5. **Default ACLs**:
+   You can also set default ACLs on directories, which will be applied to new files and subdirectories created within that directory. Use the `-d` or `--default` option with `setfacl`.
+
+   ```
+   setfacl -m d:u:username:rw directory
+   ```
+
+It's important to note that ACLs are not supported on all file systems. Additionally, some file systems (like NFS) may have specific requirements or configuration settings to enable ACL support.
+
+ACLs provide a powerful way to manage access to files and directories, but they also add complexity. It's generally recommended to use them judiciously and in situations where the traditional Unix permissions are not sufficient.
