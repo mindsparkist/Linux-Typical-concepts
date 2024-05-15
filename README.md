@@ -355,3 +355,73 @@ sudo mount -a
 The shares will now be mounted automatically at boot time. Remember to create the mount points (`/mnt/cifs_share` and `/mnt/nfs_share` in the examples) before mounting if they don't exist.
 
 Note: Be careful when editing the `/etc/fstab` file, as incorrect entries could prevent your system from booting properly. Always double-check your entries and make a backup before making changes.
+
+## ACLs (Access Control Lists) in Linux
+
+**What are ACLs?**
+
+ACLs (Access Control Lists) offer a more granular approach to managing file and directory permissions in Linux compared to the traditional Unix model (read, write, execute for owner, group, and others).
+
+**Benefits of ACLs:**
+
+* Define permissions for specific users or groups, beyond the standard owner, group, and others.
+* Grant or deny access to specific users/groups on shared resources.
+
+**Enabling ACL Support:**
+
+* ACLs are typically disabled by default. Enable them during filesystem creation or mounting.
+
+**Examples (ext4 filesystem):**
+
+* Create ext4 filesystem with ACL support:
+  ```
+  mkfs.ext4 -j -O acl /dev/sdXY
+  ```
+* Mount existing filesystem with ACL support:
+  ```
+  mount -o acl /dev/sdXY /mount/point
+  ```
+
+**Setting ACLs (using `setfacl`):**
+
+* Grant read-write access to a user:
+  ```
+  setfacl -m u:username:rw file_or_directory
+  ```
+* Grant read access to a group:
+  ```
+  setfacl -m g:groupname:r file_or_directory
+  ```
+* Remove a specific ACL entry:
+  ```
+  setfacl -x u:username file_or_directory
+  ```
+
+**Viewing ACLs (using `getfacl`):**
+
+```
+getfacl file_or_directory
+```
+
+**Removing ACLs:**
+
+Revert to traditional Unix permissions by removing all ACL entries:
+
+```
+setfacl -b file_or_directory
+```
+
+**Default ACLs:**
+
+Set default ACLs on directories to apply to new files/subdirectories:
+
+```
+setfacl -m d:u:username:rw directory
+```
+
+**Important Notes:**
+
+* Not all file systems support ACLs.
+* Specific requirements or configurations might be needed for ACL support on certain file systems (e.g., NFS).
+* Use ACLs judiciously, considering their complexity compared to traditional permissions.
+
