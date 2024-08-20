@@ -839,3 +839,51 @@ In logging, different levels are used to categorize the severity and detail of m
 Many logging frameworks and libraries offer additional levels like warning, debug, and others, providing a finer-grained control over the verbosity of logs. The specific levels and their functionalities might vary depending on the chosen logging system.
 
 By understanding these logging levels, you can effectively configure your logging system to capture the right amount of detail for your needs. This helps maintain clear and informative logs, simplifying troubleshooting and monitoring the health of your programs and systems.
+
+### Answer to the Scenario:
+
+1. **Check for Available Repositories:**
+   - First, I would check if the specific version of the package is available in any other repository that can be added to the system. This can be done by searching on the official website of the software or in trusted repositories like `EPEL`, `PPA` (for Ubuntu), or a third-party repository.
+
+2. **Download and Install the Package Manually:**
+   - If the package is not available in any repository, I would look for the specific version in the official website or trusted sources, download the `.deb` file (for Debian-based systems) or `.rpm` file (for Red Hat-based systems), and install it using:
+     - For `.deb`: `sudo dpkg -i package-name.deb`
+     - For `.rpm`: `sudo rpm -ivh package-name.rpm`
+
+3. **Use Version Control with Package Managers:**
+   - Some package managers allow you to specify the version directly. For example, with `apt` (Debian-based), you can use:
+     ```bash
+     sudo apt install package=version
+     ```
+   - If the specific version is available but not installed, the command above will ensure that the desired version is installed.
+
+4. **Build from Source:**
+   - If the specific version is not available in any repository or as a pre-built package, I would download the source code and compile it manually. This involves:
+     - Installing necessary build tools (`gcc`, `make`, etc.)
+     - Following the build instructions (usually found in a `README` or `INSTALL` file)
+     - Installing the software using `sudo make install`
+
+5. **Pinning the Version:**
+   - To prevent the package from being upgraded to a newer version, I would pin the package version using tools like `apt-mark hold` for Debian-based systems.
+
+### Answer to the Possible Follow-up:
+
+- **Removing a Package Along with Its Configuration Files:**
+  - To remove a package along with its configuration files, I would use the following commands based on the package manager:
+    - **For Debian-based systems (APT):**
+      ```bash
+      sudo apt-get purge package-name
+      ```
+      This command will remove the package and its configuration files.
+      
+    - **For Red Hat-based systems (YUM/DNF):**
+      ```bash
+      sudo yum remove package-name
+      ```
+      or
+      ```bash
+      sudo dnf remove package-name
+      ```
+      Then manually remove any leftover configuration files if necessary, as `yum` and `dnf` may not always remove them by default.
+
+This approach ensures that the specific version is installed correctly and that you can cleanly remove it if needed.
