@@ -1,3 +1,45 @@
+## HTTP Status Codes: A Quick Guide
+
+HTTP status codes are three-digit numbers that indicate the status of a web server's response to a client's request. They provide information about whether the request was successful, failed, or redirected.
+
+**Here's a breakdown of the most common status codes, categorized by their first digit:**
+
+### 1xx Informational:
+* **100 Continue:** The client should continue with the request.
+* **101 Switching Protocols:** The server is switching protocols.
+* **102 Processing:** The server has received the request and is processing it.
+* **103 Early Hints:** The server is sending early hints about the response.
+
+### 2xx Successful:
+* **200 OK:** The request was successful.
+* **201 Created:** The request was successful, and a new resource was created.
+* **202 Accepted:** The request was accepted for processing, but the processing has not been completed.
+* **204 No Content:** The request was successful, but there is no content to return.
+
+### 3xx Redirection:
+* **301 Moved Permanently:** The requested resource has been permanently moved to a new location.
+* **302 Found:** The requested resource has been temporarily moved to a new location.
+* **304 Not Modified:** The resource has not been modified since the last request.
+* **307 Temporary Redirect:** The request should be redirected to a different URL, but the original URL should be used in subsequent requests.
+
+### 4xx Client Error:
+* **400 Bad Request:** The server could not understand the request due to malformed syntax.
+* **401 Unauthorized:** The request requires authentication.
+* **403 Forbidden:** The server understood the request but refuses to fulfill it.
+* **404 Not Found:** The requested resource could not be found.
+* **405 Method Not Allowed:** The method specified in the request is not allowed for the resource.
+* **408 Request Timeout:** The server timed out waiting for the request.
+* **418 I'm a teapot:** A humorous status code used for April Fools' Day.
+
+### 5xx Server Error:
+* **500 Internal Server Error:** A generic error indicating that the server encountered an unexpected condition.
+* **502 Bad Gateway:** The server received an invalid response from an upstream server.
+* **503 Service Unavailable:** The server is temporarily unavailable.
+* **504 Gateway Timeout:** The server timed out while waiting for a response from an upstream server.
+
+By understanding these status codes, you can better troubleshoot web applications and API requests. If you encounter an error, the status code can provide valuable clues about the root cause.
+
+
 # Linux-Typical-concepts
 https://shuvradipchakrabortyportfolio.blogspot.com/2022/10/linux-notes.html
 
